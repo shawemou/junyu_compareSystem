@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.junyu.mapper.OcrHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.junyu.pojo.OcrHistory" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="GUID" property="guid" jdbcType="CHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="BAR_CODE" property="barCode" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ID_NUMBER" property="idNumber" jdbcType="VARCHAR" />
+    <result column="SUCCESS" property="success" jdbcType="CHAR" />
+    <result column="HOLD_TIME" property="holdTime" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="ID_PHOTO" property="idPhoto" jdbcType="CLOB" />
+  </resultMap>
+</mapper>

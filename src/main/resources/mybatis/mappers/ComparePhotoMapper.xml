@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.junyu.mapper.ComparePhotoMapper">
+
+	<resultMap id="BaseResultMap" type="com.junyu.pojo.ComparePhoto">
+		<!-- WARNING - @mbggenerated -->
+		<id column="GUID" property="guid" jdbcType="CHAR" />
+		<id column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+		<result column="HISTORY_GUID" property="historyGuid" jdbcType="CHAR" />
+		<result column="PHOTO_ID" property="photoId" jdbcType="BLOB" />
+		<result column="PHOTO_USER" property="photoUser" jdbcType="BLOB" />
+		<result column="PHOTO_CHIP" property="photoChip" jdbcType="BLOB" />
+	</resultMap>
+	
+	<insert id="movedate" parameterType="string">
+		INSERT INTO "RC"."T_COMPARE_PHOTO" (
+			"GUID",
+			"HISTORY_GUID",
+			"PHOTO_ID",
+			"PHOTO_USER"
+		) SELECT
+			"GUID",
+			"HISTORY_GUID",
+			"PHO_ID" "PHOTO_ID",
+			"PHO_USER" "PHOTO_USER"
+		FROM
+			"RC"."T_CACHE_HISTORY_PHOTO" T
+		WHERE
+			T.HISTORY_GUID IN ( SELECT GUID FROM T_CACHE_HISTORY WHERE ETYPE='1' AND BAR_CODE=#{bar_code})
+	</insert>
+	
+</mapper>

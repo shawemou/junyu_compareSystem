@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.junyu.mapper.CacheHistoryPhotoMapper" >
+  <resultMap id="BaseResultMap" type="com.junyu.pojo.CacheHistoryPhoto" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="GUID" property="guid" jdbcType="CHAR" />
+    <result column="HISTORY_GUID" property="historyGuid" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="PHOTO_ID" property="photoId" jdbcType="CLOB" />
+    <result column="PHOTO_USER" property="photoUser" jdbcType="CLOB" />
+    <result column="PHO_ID" property="phoId" jdbcType="BLOB" />
+    <result column="PHO_USER" property="phoUser" jdbcType="BLOB" />
+  </resultMap>
+</mapper>

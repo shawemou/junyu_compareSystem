@@ -1,0 +1,134 @@
+BODY {
+	font-family: "\5FAE\8F6F\96C5\9ED1";
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+
+.titbj {
+	margin: 0px 0px 3px 30px;
+	font-family: "\5FAE\8F6F\96C5\9ED1";
+	color: #1f1f1f;
+	font-size: 18px;
+	FONT-weight: bold;
+}
+
+.bj {
+	margin: 6px 0px 0px 10px;
+	font-family: "\5FAE\8F6F\96C5\9ED1";
+	color: #1f1f1f;
+	text-align: center;
+}
+
+.tdbg {
+	height: 22px;
+	background-color: #fff;
+	font-size: 14px;
+	text-align: center;
+	padding: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}  /*用于隐藏表格内过长数据*/
+.input_txt {
+	border: solid 1px #ccc;
+	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1) inset;
+	height: 22px;
+	text-indent: 4px;
+}
+
+.size {
+	width: 40px;
+	font-size: 14px;
+	text-align: center;
+	height: 20px;
+}
+
+.error {
+	position: absolute;
+	z-index: 100;
+	text-align: center;
+	background: #eee;
+}  /*加载出错*/
+.hide {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-break: break-all;
+	table-layout: fixed;
+}  /*用于隐藏表格内过长数据*/
+.shadow {
+	position: absolute;
+	z-index: 100;
+	text-align: center;
+	filter: alpha(opacity =       70);
+	opacity: 0.7;
+	background: #eee;
+}  /*load遮罩*/
+.tb1 {
+	background-color: #ccc;
+	text-align: center;
+	width: 98%;
+	border: 0;
+}
+
+.tb2 {
+	width: 98%;
+	border: 0px;
+}
+
+.tdright {
+	text-align: right;
+}
+
+.tdleft {
+	text-align: left;
+}
+
+.tdcenter {
+	text-align: center;
+}
+
+.tdwidth2 {
+	padding: 0;
+	width: 2%;
+}
+
+.tdwidth4 {
+	padding: 0;
+	width: 4%;
+}
+
+.tdwidth5 {
+	padding: 0;
+	width: 5%;
+}
+
+.tdwidth7 {
+	padding: 0;
+	width: 7%;
+}
+
+.tdwidth15 {
+	padding: 0;
+	width: 15%;
+}
+
+.tdwidth20 {
+	padding: 0;
+	width: 20%;
+}
+
+.img1 {
+	width: 900;
+	height: 4;
+}
+
+.inputwidth15 {
+	width: 140px;
+}
+
+.inputwidth21 {
+	width: 180px;
+}
+

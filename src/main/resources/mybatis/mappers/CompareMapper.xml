@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.junyu.mapper.CompareMapper">
+	<resultMap id="BaseResultMap" type="com.junyu.pojo.Compare">
+		<!-- WARNING - @mbggenerated -->
+		<id column="GUID" property="guid" jdbcType="CHAR" />
+		<result column="USER_GUID" property="userGuid" jdbcType="CHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="CERTID" property="certid" jdbcType="VARCHAR" />
+		<result column="SEX" property="sex" jdbcType="VARCHAR" />
+		<result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+		<result column="FORK" property="fork" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="ISSUE_AUTHORITY" property="issueAuthority"
+			jdbcType="VARCHAR" />
+		<result column="VALID_PRIOD" property="validPriod" jdbcType="VARCHAR" />
+		<result column="RETURN_CODE" property="returnCode" jdbcType="VARCHAR" />
+		<result column="RETURN_INFO" property="returnInfo" jdbcType="VARCHAR" />
+		<result column="CODE1" property="code1" jdbcType="VARCHAR" />
+		<result column="SIMILARITY1" property="similarity1" jdbcType="DECIMAL" />
+		<result column="CODE2" property="code2" jdbcType="VARCHAR" />
+		<result column="SIMILARITY2" property="similarity2" jdbcType="DECIMAL" />
+		<result column="CODE3" property="code3" jdbcType="VARCHAR" />
+		<result column="SIMILARITY3" property="similarity3" jdbcType="DECIMAL" />
+		<result column="SOURCE_CODE" property="sourceCode" jdbcType="VARCHAR" />
+		<result column="SOURCE_INFO" property="sourceInfo" jdbcType="VARCHAR" />
+		<result column="IP" property="ip" jdbcType="VARCHAR" />
+		<result column="HOLD_TIME" property="holdTime" jdbcType="DECIMAL" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+		<result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+		<result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+		<result column="COMPARE_TYPE" property="compareType" jdbcType="VARCHAR" />
+		<result column="BAR_CODE" property="barCode" jdbcType="VARCHAR" />
+		<result column="CERTID_TYPE" property="certidType" jdbcType="VARCHAR" />
+		<result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="movedate" parameterType="String">
+		INSERT INTO "RC"."T_COMPARE"
+		(
+			"GUID",
+			"USER_GUID",
+			"NAME",
+			"CERTID",
+			"RETURN_CODE",
+			"RETURN_INFO",
+			"CODE1",
+			"SIMILARITY1",
+			"SOURCE_CODE",
+			"SOURCE_INFO",
+			"HOLD_TIME",
+			"USER_TYPE",
+			"TYPE_NAME",
+			"COMPARE_TYPE",
+			"BAR_CODE",
+			"CERTID_TYPE",
+			"MOBILE"
+		)
+		select
+			"GUID",
+			"USER_GUID",
+			"NAME",
+			"ID_NUMBER" "CERTID",
+			"RETURN_CODE",
+			"RETURN_INFO",
+			"CODE" "CODE1",
+			"SIMILARITY" "SIMILARITY1",
+			"SOURCE_CODE",
+			"SOURCE_INFO",
+			"HOLD_TIME",
+			"USER_TYPE",
+			"TYPE_NAME",
+			"COMPARE_TYPE",
+			"BAR_CODE",
+			"ID_TYPE" "CERTID_TYPE",
+			"MOBILE"
+		from
+			"RC"."T_CACHE_HISTORY" T
+		WHERE T.ETYPE='1' AND T.BAR_CODE = #{barCode}
+	</insert>
+
+	<select id="selectRateList" resultType="rate" parameterType="com.junyu.common.requestBean.WebStatBean">
+		SELECT
+			TYPEID typeId,
+			TOTALCOUNT totalCount,
+			RIGHTCOUNT rightCount
+		FROM
+			(
+				SELECT
+					A .TYPEID,
+					A .TOTALCOUNT,
+					B.RIGHTCOUNT,
+					ROWNUM AS RN
+				FROM
+					(
+						SELECT
+							COUNT (1) totalCount,
+							COMPARE_TYPE typeId
+						FROM
+							T_COMPARE
+						GROUP BY
+							COMPARE_TYPE
+						ORDER BY
+							COMPARE_TYPE
+					) A
+				LEFT JOIN (
+					SELECT
+						COUNT (1) rightCount,
+						COMPARE_TYPE typeId
+					FROM
+						T_COMPARE
+					WHERE
+						RETURN_CODE = '0'
+					GROUP BY
+						COMPARE_TYPE
+					ORDER BY
+						COMPARE_TYPE
+				) B ON A .TYPEID = B.TYPEID
+			)
+		WHERE
+			RN BETWEEN #{begin} AND #{end}
+			<if test="statBean.typeGuid!=null">
+				and TYPEID = #{statBean.typeGuid}
+			</if>
+	</select>
+	
+	<select id="selectTotalCount" resultType="int">
+		SELECT
+			COUNT (1)
+		FROM
+			(
+				SELECT
+					COUNT (1)
+				FROM
+					T_COMPARE
+				GROUP BY
+					COMPARE_TYPE
+			)
+	</select>
+</mapper>

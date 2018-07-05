@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.junyu.mapper.UserLoginLogMapper">
+  <resultMap id="BaseResultMap" type="com.junyu.pojo.UserLoginLog">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="GUID" jdbcType="CHAR" property="guid" />
+    <result column="LOGIN_NAME" jdbcType="VARCHAR" property="loginName" />
+    <result column="LOGIN_PWD" jdbcType="VARCHAR" property="loginPwd" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+    <result column="ETYPE" jdbcType="CHAR" property="etype" />
+    <result column="CREATE_TIME" jdbcType="CHAR" property="createTime" />
+    <result column="LOGIN_OUT_TIME" jdbcType="CHAR" property="loginOutTime" />
+    <result column="DETAIL_DES" jdbcType="VARCHAR" property="detailDes" />
+  </resultMap>
+  
+  <select id="queryOnline" resultType="String">
+	  	SELECT
+			DISTINCT(USER_GUID)
+		FROM
+			T_USER_LOGIN_LOG
+		WHERE
+		CREATE_TIME > ADD_MONTHS (SYSDATE ,- 3) 
+  </select>
+</mapper>
