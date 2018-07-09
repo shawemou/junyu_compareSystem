@@ -297,11 +297,11 @@ public class WebUserController {
 		// 12,获取离线用户
 		@RequestMapping(value = "offlineList", method = { RequestMethod.POST, RequestMethod.GET }/*, produces = "application/json; charset=UTF-8"*/)
 		@ResponseBody
-		public Page<User> offlineList(WebStatBean statBean) {
+		public Page<User> offlineList(WebStatBean statBean,@RequestParam(value="offlineTime",required=false,defaultValue="3")String offlineTime) {
 			logger.info("获取离线用户");
 			Page<User> page = new Page<User>();
 			try {
-				page = this.userService.queryOffline(page,statBean);
+				page = this.userService.queryOffline(page,statBean,offlineTime);
 			} catch (Exception e) {
 				logger.error("获取用户信息失败" + e.getMessage());
 				e.printStackTrace();

@@ -21,7 +21,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-<!--  	<filter>
+  	<filter>
 		<filter-name>AppFilter</filter-name>
 		<filter-class>com.junyu.filter.AppFilter</filter-class>
 	</filter>
@@ -29,7 +29,7 @@
 		<filter-name>AppFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
- -->
+
 	<servlet>
 		<servlet-name>InitServlet</servlet-name>
 		<servlet-class>com.my.servlet.InitServlet</servlet-class>

@@ -64,7 +64,7 @@ public class OCRService extends BaseService<OcrHistory> {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		String strReturn = ocr(object);
+		String strReturn = this.ocr(object);
 		Log4jUtil.log.warn(strReturn);
 
 		or.setSuccess(false);

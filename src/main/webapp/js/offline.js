@@ -39,6 +39,7 @@ function query_stat_AJAX() {
 	var param = {};
 	param["page_no"] = $("#page_no").val();
 	param["page_count"] = $("#pageCount").val();
+	param["offlineTime"] = $("#offlineTime").val();
 	$("#err_msg").html("");
 	$("#loading_Shadow").show();
 	$("#statQueryBtn").attr("disabled", true);

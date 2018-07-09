@@ -1,8 +1,5 @@
 package com.junyu.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;

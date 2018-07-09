@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ctc.wstx.util.StringUtil;
 import com.github.abel533.entity.Example;
 import com.github.abel533.entity.Example.Criteria;
 import com.github.pagehelper.PageHelper;
@@ -311,9 +310,9 @@ public class UserService extends BaseService<User> {
 	 * @return Page<User>
 	 * @throws
 	 */
-	public Page<User> queryOffline(Page<User> page, WebStatBean webBean) {
+	public Page<User> queryOffline(Page<User> page, WebStatBean webBean,String offlineTime) {
 		// 1,获取在线列表
-		List<Object> onlines = this.loginLogMapper.queryOnline();
+		List<Object> onlines = this.loginLogMapper.queryOnline(offlineTime);
 		ArrayList<Object> list = new ArrayList<Object>();
 		for (Object object : onlines) {
 			if(object!=null){
@@ -328,6 +327,7 @@ public class UserService extends BaseService<User> {
 		example.setOrderByClause("createTime asc");
 		Criteria criteria = example.createCriteria();
 		criteria.andNotIn("guid", onlines);
+		criteria.andEqualTo("busable", 1);
 		PageInfo<User> pageInfo = new PageInfo<User>(this.userMapper.selectByExample(example));
 		page.setData(pageInfo.getList());
 		page.setItemCount(pageInfo.getTotal() + "");

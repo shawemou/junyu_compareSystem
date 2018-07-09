@@ -1,8 +1,8 @@
 $(function() {
 	typeArr = {};
 	typePareArr = {};
-	getAllBank();
 	allType={};
+	getAllBank();
 	showAllType();
 	var shadowCSS = [];
 	shadowCSS["width"] = $("#show_div").width();

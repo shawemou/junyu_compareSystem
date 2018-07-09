@@ -79,12 +79,26 @@
 																<div class="field-box hidden">
 																	<label> 开始时间: </label> <input class="width200 input_txt radius-4" name="mobile" maxlength="18" id="begin_date" type="text" onclick="WdatePicker()" /> <span class="alert-msg">&nbsp;</span>
 																</div>
-																<div class="field-box hidden">
-																	<label>用户类型:</label> <select class="width200 input_txt radius-4" style="background-color: #c9daf8" name="" maxlength="25" id="parenttype">
-																	</select> <span class="alert-msg">&nbsp;</span>
+																<div class="field-box ">
+																	<label>离线时间:</label> 
+																	<select class="width200 input_txt radius-4" style="background-color: #c9daf8" name="" maxlength="25" id="offlineTime">
+																		<option value="1">1 个月</option>
+																		<option value="2">2 个月</option>
+																		<option value="3" selected="selected">3 个月</option>
+																		<option value="4">4 个月</option>
+																		<option value="5">5 个月</option>
+																		<option value="6">6 个月</option>
+																		<option value="7">7 个月</option>
+																		<option value="8">8 个 月</option>
+																		<option value="9">9 个月</option>
+																		<option value="10">10 个月</option>
+																		<option value="11">11 个月</option>
+																		<option value="12">12 个月</option>
+																	</select> 
+																	<span class="alert-msg">&nbsp;</span>
 																</div>
-																<div class="float-left  hidden" style="margin-left: 50px;">
-																	<button type="button" class="btn btn-info" id="statQueryBtn" style="width: 70px; margin-right: 10px;">统计</button>
+																<div class="float-left " style="margin-left: 50px;">
+																	<button type="button" class="btn btn-info" id="statQueryBtn" style="width: 70px; margin-right: 10px;">查询</button>
 																</div>
 															</div>
 															<hr>

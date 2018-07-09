@@ -49,7 +49,7 @@ public class PwdModifyController {
 					CommonUtils.setInfo(br, false, CommonUtils.getError(result).toString());
 				}
 				if (!StringUtils.equals(passwordBean.getNew_secret_key(), passwordBean.getRepeat_secret_key())) {
-					CommonUtils.setInfo(br, false, "新密码和旧密码不一致");
+					CommonUtils.setInfo(br, false, "两次新密码输入不一致");
 				}
 				if (br.getSuccess()) {
 					// 3,校验并保存用户密码
