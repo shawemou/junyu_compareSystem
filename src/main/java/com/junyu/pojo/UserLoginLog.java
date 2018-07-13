@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "T_USER_LOGIN_LOG")
+@Table(name = "F_USER_LOGIN_LOG")
 public class UserLoginLog extends BasePojo implements Serializable {
     @Column(name = "GUID")
     private String guid;

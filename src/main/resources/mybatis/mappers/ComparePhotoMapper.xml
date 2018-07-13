@@ -13,7 +13,7 @@
 	</resultMap>
 	
 	<insert id="movedate" parameterType="string">
-		INSERT INTO "RC"."T_COMPARE_PHOTO" (
+		INSERT INTO "RC"."F_COMPARE_PHOTO" (
 			"GUID",
 			"HISTORY_GUID",
 			"PHOTO_ID",
@@ -24,9 +24,9 @@
 			"PHO_ID" "PHOTO_ID",
 			"PHO_USER" "PHOTO_USER"
 		FROM
-			"RC"."T_CACHE_HISTORY_PHOTO" T
+			"RC"."F_CACHE_HISTORY_PHOTO" T
 		WHERE
-			T.HISTORY_GUID IN ( SELECT GUID FROM T_CACHE_HISTORY WHERE ETYPE='1' AND BAR_CODE=#{bar_code})
+			T.HISTORY_GUID IN ( SELECT GUID FROM F_CACHE_HISTORY WHERE ETYPE='1' AND BAR_CODE=#{bar_code})
 	</insert>
 	
 </mapper>

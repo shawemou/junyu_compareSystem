@@ -49,6 +49,7 @@ public class CatchListController {
 				if (cr.getSuccess()) {
 					// 3,对请求方法进行操作
 					if (StringUtils.equals("list", cacheListBean.getMethod())) {
+						//3.1获取列表
 						logger.info("获取列表");
 						if (this.isNullOfBarCord(cacheListBean.getBar_code(), cr).getSuccess()) {
 							HashMap<String, Object> dbInfo = new HashMap<String, Object>();
@@ -56,6 +57,7 @@ public class CatchListController {
 							cr.setDbInfo(dbInfo);
 						}
 					} else if (StringUtils.equals("delete", cacheListBean.getMethod())) {
+						//3.2删除暂存
 						logger.info("删除暂存");
 						if (CollectionUtils.isEmpty(cacheListBean.getData())) {
 							CommonUtils.setInfo(cr, false, "请选择要删除的数据");
@@ -64,6 +66,7 @@ public class CatchListController {
 							this.cacheService.deleteByGuids(cacheListBean.getData(), "guid");
 						}
 					} else if (StringUtils.equals("done", cacheListBean.getMethod())) {
+						//3.3暂存转正式
 						logger.info("暂存转正式");
 						if (this.isNullOfBarCord(cacheListBean.getBar_code(), cr).getSuccess()) {
 							this.compareService.fromCacheToCompare(cacheListBean);

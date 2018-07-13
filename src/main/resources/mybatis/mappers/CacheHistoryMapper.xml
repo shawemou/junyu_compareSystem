@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.junyu.mapper.CacheHistoryMapper" >
-  <resultMap id="BaseResultMap" type="com.junyu.pojo.CacheHistory" >
-    <!--
-      WARNING - @mbggenerated
-    -->
-    <id column="GUID" property="guid" jdbcType="CHAR" />
-    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
-    <result column="BAR_CODE" property="barCode" jdbcType="VARCHAR" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="ID_NUMBER" property="idNumber" jdbcType="VARCHAR" />
-    <result column="SIMILARITY" property="similarity" jdbcType="DECIMAL" />
-    <result column="SUCCESS" property="success" jdbcType="VARCHAR" />
-    <result column="RETURN_CODE" property="returnCode" jdbcType="VARCHAR" />
-    <result column="HOLD_TIME" property="holdTime" jdbcType="DECIMAL" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
-    <result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
-    <result column="ETYPE" property="etype" jdbcType="VARCHAR" />
-    <result column="SOURCE_CODE" property="sourceCode" jdbcType="VARCHAR" />
-    <result column="SOURCE_INFO" property="sourceInfo" jdbcType="VARCHAR" />
-    <result column="SOURCE_HOLD_TIME" property="sourceHoldTime" jdbcType="DECIMAL" />
-    <result column="USER_GUID" property="userGuid" jdbcType="VARCHAR" />
-    <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
-    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
-    <result column="COMPARE_TYPE" property="compareType" jdbcType="VARCHAR" />
-    <result column="RETURN_INFO" property="returnInfo" jdbcType="VARCHAR" />
-    <result column="CODE1
+<mapper namespace="com.junyu.mapper.CacheHistoryMapper">
+	<resultMap id="BaseResultMap" type="com.junyu.pojo.CacheHistory">
+		<!-- WARNING - @mbggenerated -->
+		<id column="GUID" property="guid" jdbcType="CHAR" />
+		<result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+		<result column="BAR_CODE" property="barCode" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ID_NUMBER" property="idNumber" jdbcType="VARCHAR" />
+		<result column="SIMILARITY" property="similarity" jdbcType="DECIMAL" />
+		<result column="SUCCESS" property="success" jdbcType="VARCHAR" />
+		<result column="RETURN_CODE" property="returnCode" jdbcType="VARCHAR" />
+		<result column="HOLD_TIME" property="holdTime" jdbcType="DECIMAL" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+		<result column="ID_TYPE" property="idType" jdbcType="VARCHAR" />
+		<result column="ETYPE" property="etype" jdbcType="VARCHAR" />
+		<result column="SOURCE_CODE" property="sourceCode" jdbcType="VARCHAR" />
+		<result column="SOURCE_INFO" property="sourceInfo" jdbcType="VARCHAR" />
+		<result column="SOURCE_HOLD_TIME" property="sourceHoldTime"
+			jdbcType="DECIMAL" />
+		<result column="USER_GUID" property="userGuid" jdbcType="VARCHAR" />
+		<result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+		<result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+		<result column="COMPARE_TYPE" property="compareType" jdbcType="VARCHAR" />
+		<result column="RETURN_INFO" property="returnInfo" jdbcType="VARCHAR" />
+		<result column="CODE1
 " property="code1
 " jdbcType="VARCHAR" />
-    <result column="SIMILARITY1
+		<result column="SIMILARITY1
 " property="similarity1
 " jdbcType="DECIMAL" />
-  </resultMap>
+	</resultMap>
 </mapper>

@@ -16,13 +16,16 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.junyu.pojo.User;
+import com.junyu.service.UserService;
+import com.junyu.utils.SpringBeanUtils;
+
 
 public class AppFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -30,17 +33,29 @@ public class AppFilter implements Filter {
 		// 强制转换为与协议相关的对象
 		HttpServletRequest req = (HttpServletRequest) request;
 		String login = req.getRequestURL().toString().toUpperCase();
+		boolean isGo = true;
 
 		if (login.indexOf("WEB")<=0) {
 			req = new MyRequest(req);
+			if(login.indexOf("LOGIN.DO")<=0&&login.indexOf("PWDMODIFY.DO")<=0){
+				String userGuid = req.getParameter("user_guid");
+				UserService userService = (UserService) SpringBeanUtils.getBean(UserService.class);
+				User user = userService.queryById(userGuid);
+				if(user.getBusable()=="2"){
+					isGo=false;
+					response.getOutputStream().write("{\"success\":\"false\"}".getBytes("GBK"));
+				}
+			}
 		}
-		// 放行
-		chain.doFilter(req, response);
+		
+		if(isGo){
+			// 放行
+			chain.doFilter(req, response);
+		}
 	}
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
 
 	}
 

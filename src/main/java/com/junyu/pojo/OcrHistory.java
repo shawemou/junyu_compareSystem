@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "T_OCR_HISTORY")
+@Table(name = "F_OCR_HISTORY")
 public class OcrHistory extends BasePojo implements Serializable {
     @Id
     @Column(name = "GUID")

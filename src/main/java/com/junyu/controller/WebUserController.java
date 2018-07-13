@@ -1,6 +1,7 @@
 package com.junyu.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -49,7 +50,7 @@ public class WebUserController {
 	private HttpServletRequest request;
 
 	// 1,获取用户信息
-	@RequestMapping(value = "webDateList", method = { RequestMethod.POST, RequestMethod.GET }/*/*, produces = "application/json; charset=UTF-8"*/)
+	@RequestMapping(value = "webDateList", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public Page<User> wenLogin(WebMobileBean webBean) {
 		logger.info("获取所有用户信息");
@@ -68,8 +69,27 @@ public class WebUserController {
 
 	}
 
+	@RequestMapping(value = "webDateList1", method = { RequestMethod.POST, RequestMethod.GET })
+	@ResponseBody
+	public Map<String, Object> webDateList1(WebMobileBean webBean) {
+		logger.info("获取所有用户信息");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		Page<User> page = new Page<User>();
+		try {
+			page = this.userService.query(page, webBean);
+			map.put("aaData", page.getData());
+			map.put("iTotalRecords", page.getItemCount());
+			map.put("iTotalDisplayRecords", page.getItemCount());
+			return map;
+		} catch (Exception e) {
+			logger.error("获取用户信息失败" + e.getMessage());
+			e.printStackTrace();
+		}
+		return map;
+	}
+
 	// 2,获取单个配置
-	@RequestMapping(value = "loadMobile", method = { RequestMethod.POST, RequestMethod.GET }/*/*, produces = "application/json; charset=UTF-8"*/)
+	@RequestMapping(value = "loadMobile", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public User getOneUser(WebMobileBean webBean) {
 		logger.info("获取单个信息");
@@ -86,7 +106,7 @@ public class WebUserController {
 	}
 
 	// 3,更改可用状态
-	@RequestMapping(value = "updateBusable", method = { RequestMethod.POST, RequestMethod.GET }/*, produces = "application/json; charset=UTF-8"*/)
+	@RequestMapping(value = "updateBusable", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public BaseReturn updateBusable(WebMobileBean webBean) {
 		logger.info("更改可用状态");
@@ -107,7 +127,7 @@ public class WebUserController {
 	}
 
 	// 4,密码重置
-	@RequestMapping(value = "updatePwd", method = { RequestMethod.POST, RequestMethod.GET }/*, produces = "application/json; charset=UTF-8"*/)
+	@RequestMapping(value = "updatePwd", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public BaseReturn reSetPassword(WebMobileBean webBean) {
 		logger.info("重置密码");
@@ -129,7 +149,7 @@ public class WebUserController {
 	}
 
 	// 5,change事件获取user
-	@RequestMapping(value = "validataUser", method = { RequestMethod.POST, RequestMethod.GET }/*, produces = "application/json; charset=UTF-8"*/)
+	@RequestMapping(value = "validataUser", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public BaseReturn validataUser(User record) {
 		logger.info("校验修改或者注册用户的手机号和用户是否存在");
@@ -156,7 +176,7 @@ public class WebUserController {
 	}
 
 	// 6,修改
-	@RequestMapping(value = "updateUser", method = { RequestMethod.POST, RequestMethod.GET }/*, produces = "application/json; charset=UTF-8"*/)
+	@RequestMapping(value = "updateUser", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public BaseReturn updateUser(@Valid User record, @RequestParam("parenttype") String parenttype, BindingResult result) {
 		logger.info("修改用户");
@@ -166,6 +186,10 @@ public class WebUserController {
 			// 1,表单校验
 			if (result.hasErrors()) {
 				CommonUtils.setInfo(br, false, CommonUtils.getError(result).toString());
+				return br;
+			}
+			if (!record.getMobile().matches("[0-9]+")) {
+				CommonUtils.setInfo(br, false, "手机号存在非法字符");
 				return br;
 			}
 			// 2,保存user
@@ -179,7 +203,7 @@ public class WebUserController {
 	}
 
 	// 7,新增saveMobile
-	@RequestMapping(value = "saveMobile", method = { RequestMethod.POST, RequestMethod.GET }/*, produces = "application/json; charset=UTF-8"*/)
+	@RequestMapping(value = "saveMobile", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public BaseReturn saveMobile(@Valid User record, @RequestParam("parenttype") String parenttype, BindingResult result) {
 		logger.info("保存用户");
@@ -189,6 +213,10 @@ public class WebUserController {
 			// 1,表单校验
 			if (result.hasErrors()) {
 				CommonUtils.setInfo(br, false, CommonUtils.getError(result).toString());
+				return br;
+			}
+			if (!record.getMobile().matches("[0-9]+")) {
+				CommonUtils.setInfo(br, false, "手机号存在非法字符");
 				return br;
 			}
 			// 2,保存user
@@ -205,7 +233,7 @@ public class WebUserController {
 	}
 
 	// 8,统计查询
-	@RequestMapping(value = "completeList", method = { RequestMethod.POST, RequestMethod.GET }/*, produces = "application/json; charset=UTF-8"*/)
+	@RequestMapping(value = "completeList", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public Page<Compare> completeList(WebStatBean statBean) {
 		logger.info("统计查询");
@@ -221,9 +249,29 @@ public class WebUserController {
 		}
 		return page;
 	}
+	
+	@RequestMapping(value = "completeList1", method = { RequestMethod.POST, RequestMethod.GET })
+	@ResponseBody
+	public Map<String,Object> completeList1(WebStatBean statBean) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("统计查询");
+		Page<Compare> page = new Page<Compare>();
+		try {
+			page = this.compareService.query(page, statBean);
+			map.put("aaData", page.getData());
+			map.put("iTotalRecords", page.getItemCount());
+			map.put("iTotalDisplayRecords", page.getItemCount());
+			return map;
+		} catch (Exception e) {
+			logger.error("获取统计信息失败" + e.getMessage());
+			e.printStackTrace();
+		}
+		return map;
+	}
 
 	// 9,人证一致使用率统计
-	@RequestMapping(value = "rateList", method = { RequestMethod.POST, RequestMethod.GET }/*, produces = "application/json; charset=UTF-8"*/)
+	@RequestMapping(value = "rateList", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public Page<Rate> rateList(WebStatBean statBean) {
 		logger.info("统计查询");
@@ -240,14 +288,30 @@ public class WebUserController {
 		return page;
 
 	}
+	
+	
+	@RequestMapping(value = "rateList1", method = { RequestMethod.POST, RequestMethod.GET })
+	@ResponseBody
+	public Map<String,Object> rateList1(WebStatBean statBean) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("银行使用率统计");
+		Page<Rate> page = new Page<Rate>();
+		try {
+			page = this.compareService.queryRate(page, statBean);
+			map.put("aaData", page.getData());
+			map.put("iTotalRecords", page.getItemCount());
+			map.put("iTotalDisplayRecords", page.getItemCount());
+			return map;
+		} catch (Exception e) {
+			logger.error("获取统计信息失败" + e.getMessage());
+			e.printStackTrace();
+		}
+		return map;
 
-	//10, 获取所有的用户类型
-	@RequestMapping(value = "getBanKList", method = { RequestMethod.POST, RequestMethod.GET }/*
-																							  ,
-																							  produces
-																							  =
-																							  "application/json;charset=GBK"
-																							 */)
+	}
+
+	// 10, 获取所有的用户类型
+	@RequestMapping(value = "getBanKList", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public BaseReturn getBanKList() {
 		logger.info("获取所有的用户类型");
@@ -265,50 +329,61 @@ public class WebUserController {
 		}
 		return br;
 	}
-	
-	
-	
-		//11, 获取所用用户
-		@RequestMapping(value = "getUserList", method = { RequestMethod.POST, RequestMethod.GET }/*
-																								  ,
-																								  produces
-																								  =
-																								  "application/json;charset=GBK"
-																								 */)
-		@ResponseBody
-		public BaseReturn getUserList() {
-			logger.info("获取所用用户");
-			BaseReturn br = new BaseReturn();
-			new Page<UserType>();
-			try {
-				HashMap<String, Object> dbInfo = new HashMap<String, Object>();
-				dbInfo.put("userList", this.userService.queryAll());
-				br.setDbInfo(dbInfo);
-			} catch (Exception e) {
-				e.printStackTrace();
-				logger.error(e.getMessage());
-				CommonUtils.setInfo(br, false, "服务器出错");
-				br.setDbInfo(null);
-			}
-			return br;
+
+	// 11, 获取所用用户
+	@RequestMapping(value = "getUserList", method = { RequestMethod.POST, RequestMethod.GET })
+	@ResponseBody
+	public BaseReturn getUserList() {
+		logger.info("获取所用用户");
+		BaseReturn br = new BaseReturn();
+		new Page<UserType>();
+		try {
+			HashMap<String, Object> dbInfo = new HashMap<String, Object>();
+			dbInfo.put("userList", this.userService.queryAll());
+			br.setDbInfo(dbInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+			CommonUtils.setInfo(br, false, "服务器出错");
+			br.setDbInfo(null);
 		}
-		
-		
-		// 12,获取离线用户
-		@RequestMapping(value = "offlineList", method = { RequestMethod.POST, RequestMethod.GET }/*, produces = "application/json; charset=UTF-8"*/)
-		@ResponseBody
-		public Page<User> offlineList(WebStatBean statBean,@RequestParam(value="offlineTime",required=false,defaultValue="3")String offlineTime) {
-			logger.info("获取离线用户");
-			Page<User> page = new Page<User>();
-			try {
-				page = this.userService.queryOffline(page,statBean,offlineTime);
-			} catch (Exception e) {
-				logger.error("获取用户信息失败" + e.getMessage());
-				e.printStackTrace();
-				page.setSuccess(false);
-				page.setData(null);
-				page.setInfo("获取信息失败");
-			}
-			return page;
+		return br;
+	}
+
+	// 12,获取离线用户
+	@RequestMapping(value = "offlineList", method = { RequestMethod.POST, RequestMethod.GET })
+	@ResponseBody
+	public Page<User> offlineList(WebStatBean statBean, @RequestParam(value = "offlineTime", required = false, defaultValue = "3") String offlineTime) {
+		logger.info("获取离线用户");
+		Page<User> page = new Page<User>();
+		try {
+			page = this.userService.queryOffline(page, statBean, offlineTime);
+		} catch (Exception e) {
+			logger.error("获取用户信息失败" + e.getMessage());
+			e.printStackTrace();
+			page.setSuccess(false);
+			page.setData(null);
+			page.setInfo("获取信息失败");
 		}
+		return page;
+	}
+	
+	@RequestMapping(value = "offlineList1", method = { RequestMethod.POST, RequestMethod.GET })
+	@ResponseBody
+	public Map<String,Object> offlineList1(WebStatBean statBean, @RequestParam(value = "offlineTime", required = false, defaultValue = "3") String offlineTime) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("获取离线用户");
+		Page<User> page = new Page<User>();
+		try {
+			page = this.userService.queryOffline(page, statBean, offlineTime);
+			map.put("aaData", page.getData());
+			map.put("iTotalRecords", page.getItemCount());
+			map.put("iTotalDisplayRecords", page.getItemCount());
+			return map;
+		} catch (Exception e) {
+			logger.error("获取离线信息失败" + e.getMessage());
+			e.printStackTrace();
+		}
+		return map;
+	}
 }

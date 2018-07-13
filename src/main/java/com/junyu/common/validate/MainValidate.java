@@ -49,6 +49,8 @@ public class MainValidate {
 			return ModifyPwdValidate.vali(strJson, viBean, bean);
 		}else if( viBean.getType().equals(EnumInstance.compareType) ){
 			return CompareValidate.vali(strJson, viBean, bean);
+		}else if( viBean.getType().equals(EnumInstance.userAndBankType) ){
+			return UserValidate.vali(strJson, viBean, bean);
 		}else{
 			bean.setCode(EReturn.RT_NotMatch_Service_null);
 			return false;

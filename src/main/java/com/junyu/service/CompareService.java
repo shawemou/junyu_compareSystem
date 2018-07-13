@@ -44,10 +44,12 @@ import com.junyu.config.ReadingSetting;
 import com.junyu.mapper.CacheHistoryMapper;
 import com.junyu.mapper.CompareMapper;
 import com.junyu.mapper.ComparePhotoMapper;
+import com.junyu.mapper.UserMapper;
 import com.junyu.pojo.CacheHistory;
 import com.junyu.pojo.Compare;
 import com.junyu.pojo.ComparePhoto;
 import com.junyu.pojo.Rate;
+import com.junyu.pojo.User;
 import com.junyu.server.WSCompareServerThread;
 import com.junyu.server.WSSourceCompareServerThread;
 import com.junyu.server.Client.JYWebserviceClient;
@@ -63,6 +65,9 @@ public class CompareService extends BaseService<Compare> {
 	private static Logger logger = LoggerFactory.getLogger(CompareService.class);
 
 	private static int TOTAL_COUNT = 2;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	@Autowired
 	private CompareMapper compareMapper;
@@ -183,7 +188,7 @@ public class CompareService extends BaseService<Compare> {
 			}
 		}
 
-		if (cr.getCode().equals(Return.RT_Not_Compare) && StringUtils.isNotBlank(cr.getReturn_code())) {
+		if (cr.getCode()!=null&&cr.getCode().equals(Return.RT_Not_Compare) && StringUtils.isNotBlank(cr.getReturn_code())) {
 			if (EReturnCompareCode.map.containsKey(cr.getReturn_code())) {
 				cr.setInfo(EReturnCompareCode.map.get(cr.getReturn_code()));
 			}
@@ -247,7 +252,6 @@ public class CompareService extends BaseService<Compare> {
 	*/
 	public void saveWebServiceCompare(VisitInfoBean viBean, ReturnBean bean) {
 		Compare compare = viBean.getCompare();
-		compare.setBarCode(null);
 		compare.setCode1(bean.getCrBean1()==null?null:bean.getCrBean1().getCode());
 		compare.setCode2(bean.getCrBean2()==null?null:bean.getCrBean2().getCode());
 		compare.setCode3(bean.getCrBean3()==null?null:bean.getCrBean3().getCode());
@@ -284,10 +288,17 @@ public class CompareService extends BaseService<Compare> {
 		CacheHistory cache = new CacheHistory();
 		cache.setBarCode(cacheListBean.getBar_code());
 		cache.setEtype("1");
+		cache.setCompareType(cacheListBean.getCompare_guid());
+		//非市中心用户-->加userguid
+		User user = this.userMapper.selectByPrimaryKey(cacheListBean.getUser_guid());
+		if(!StringUtils.equals("000", user.getTypeGuid())){
+			cache.setUserGuid(user.getGuid());
+		}
 		List<CacheHistory> cacheList = this.cacheMapper.select(cache);
+		
 		if (CollectionUtils.isNotEmpty(cacheList)) {
 			// 1,基本内容搬家
-			this.compareMapper.movedate(cacheListBean.getBar_code());
+			this.compareMapper.movedate(cacheListBean.getBar_code(),cacheListBean);
 
 			// 2,依赖的表搬家
 			this.comparePhoMapper.movedate(cacheListBean.getBar_code());
@@ -313,7 +324,12 @@ public class CompareService extends BaseService<Compare> {
 	 * @throws
 	 */
 	public Page<Compare> query(Page<Compare> page, WebStatBean statBean) {
-		PageHelper.startPage(NumberUtils.toInt(statBean.getPage_no(), 1), NumberUtils.toInt(statBean.getPage_count(), 10));
+		int startNum = NumberUtils.toInt(statBean.getStart(), 0);
+		int pageSize = NumberUtils.toInt(statBean.getLength(), 10);
+		int startPage = startNum/pageSize+1;
+
+		PageHelper.startPage(startPage, pageSize);
+		
 		Example example = new Example(Compare.class);
 		example.setOrderByClause("createTime asc");
 		Criteria criteria = example.createCriteria();
@@ -323,8 +339,17 @@ public class CompareService extends BaseService<Compare> {
 		if (statBean.getEndDate() != null) {
 			criteria.andLessThanOrEqualTo("createTime", statBean.getEndDate());
 		}
-		if (StringUtils.isNoneBlank(statBean.getParenttype())) {
-			criteria.andLike("compareType", statBean.getParenttype() + "%");
+		if (StringUtils.isNoneBlank(statBean.getTypeGuid())) {
+			criteria.andEqualTo("compareType", statBean.getTypeGuid()); }
+		if (StringUtils.isNoneBlank(statBean.getBarCode())) {
+			criteria.andEqualTo("barCode", statBean.getBarCode());
+		}
+		if (StringUtils.isNoneBlank(statBean.getReturnCode())) {
+			if(StringUtils.equals("0", statBean.getReturnCode())){
+				criteria.andEqualTo("returnCode", "0");
+			}else{
+				criteria.andNotEqualTo("returnCode", "0");
+			}
 		}
 		PageInfo<Compare> pageInfo = new PageInfo<Compare>(this.compareMapper.selectByExample(example));
 
@@ -348,16 +373,11 @@ public class CompareService extends BaseService<Compare> {
 	 * @throws
 	 */
 	public Page<Rate> queryRate(Page<Rate> page, WebStatBean statBean) {
-		if (StringUtils.isNotBlank(statBean.getParenttype()) && statBean.getParenttype().length() == 3) {
-			statBean.setTypeGuid(statBean.getParenttype());
-		} else if (statBean.getParenttype().length() != 2) {
-			statBean.setTypeGuid(null);
-		}
-		int pageNum = NumberUtils.toInt(statBean.getPage_no(), 1);
-		int pageSize = NumberUtils.toInt(statBean.getPage_count(), 10);
-		Integer begin = (pageNum - 1) * pageSize;
-		Integer end = begin + pageSize;
-		List<Rate> rateList = this.compareMapper.selectRateList(statBean, begin, end);
+		int startNum = NumberUtils.toInt(statBean.getStart(), 0);
+		int pageSize = NumberUtils.toInt(statBean.getLength(), 10);
+		Integer end = startNum + pageSize;
+		
+		List<Rate> rateList = this.compareMapper.selectRateList(statBean, startNum, end);
 		page.setData(rateList);
 		page.setItemCount(this.compareMapper.selectTotalCount(statBean) + "");
 		page.setPage_no(statBean.getPage_no());

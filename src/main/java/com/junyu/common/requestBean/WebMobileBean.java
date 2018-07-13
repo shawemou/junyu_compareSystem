@@ -13,11 +13,34 @@ public class WebMobileBean {
 	private String detail_des;
 	private String bank_name;
 	private String parenttype;
+	private String typeGuid;
 	
 	private String page_no;
 	private String page_count;
 	
+	private String start;
+	private String length;
 	
+	
+	
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
+	public String getLength() {
+		return length;
+	}
+	public void setLength(String length) {
+		this.length = length;
+	}
+	public String getTypeGuid() {
+		return typeGuid;
+	}
+	public void setTypeGuid(String typeGuid) {
+		this.typeGuid = typeGuid;
+	}
 	public String getParenttype() {
 		return parenttype;
 	}

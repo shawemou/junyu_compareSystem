@@ -1,5 +1,8 @@
 package com.junyu.common.returnBean;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class ReturnBean extends BaseReturn {
 
@@ -12,6 +15,15 @@ public class ReturnBean extends BaseReturn {
 	public CompareReturnBean crBean3 = new CompareReturnBean();//现场照比对芯片照
 	public CompareReturnBean crBean4 = new CompareReturnBean();//多源认证接口比对结果
 	
+	private Map<String,Object> dbInfo = new HashMap<String, Object>();
+	
+	
+	public Map<String, Object> getDbInfo() {
+		return dbInfo;
+	}
+	public void setDbInfo(Map<String, Object> dbInfo) {
+		this.dbInfo = dbInfo;
+	}
 	public String getCode() {
 		return code;
 	}

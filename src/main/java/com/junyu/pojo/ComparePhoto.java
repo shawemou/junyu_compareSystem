@@ -5,7 +5,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-@Table(name = "T_COMPARE_PHOTO")
+@Table(name = "F_COMPARE_PHOTO")
 public class ComparePhoto extends BasePojo implements Serializable {
     @Id
     @Column(name = "GUID")

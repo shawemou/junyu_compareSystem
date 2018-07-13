@@ -44,6 +44,7 @@ import com.junyu.common.returnBean.CompareReturn;
 import com.junyu.common.returnBean.CompareReturnBean;
 import com.junyu.common.returnBean.EnumInstance;
 import com.junyu.common.returnBean.EnumInstance.EReturn;
+import com.junyu.common.returnBean.EnumInstance.EReturnModifyPwd;
 import com.junyu.common.returnBean.EnumInstance.Return;
 import com.sun.tools.javac.comp.Check;
 
@@ -421,12 +422,17 @@ public class JYWebserviceClient{
 				if (StringUtils.isNotBlank(e.getTextContent())) {
 					if( e.getTextContent().equals(EnumInstance.EReturn.RT_Success) ){
 						cr.setReturn_code(Return.RT_Success);
+						cr.setCode(EnumInstance.EReturn.RT_Success);
+						cr.setInfo(EReturnModifyPwd.map.get(EnumInstance.EReturn.RT_Success));
 					}else if( e.getTextContent().equals(EnumInstance.EReturn.RT_Fail) || e.getTextContent().equals(EnumInstance.EReturn.RT_Unsure) ){
 						cr.setReturn_code(Return.RT_Fail);
+						cr.setCode(EnumInstance.EReturn.RT_Fail);
+						cr.setInfo(EReturnModifyPwd.map.get(EnumInstance.EReturn.RT_Fail));
 					}else{
 						cr.setSuccess(false);
 						cr.setReturn_code(Return.RT_Not_Compare);
 						cr.setCode(e.getTextContent());
+						cr.setInfo(EReturnModifyPwd.map.get(e.getTextContent()));
 					}
 					
 					// ÈÕÖ¾¼ÇÂ¼strLastErr

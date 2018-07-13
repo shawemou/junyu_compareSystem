@@ -7,13 +7,19 @@ public class EnumInstance {
 	public final static String loginType = "1";//登录type
 	public final static String modifyPwdType = "2";//密码修改type
 	public final static String compareType = "3";//本地比对type
+	public final static String userAndBankType = "4";//查询用户信息和所有银行
 
 	// 返回给客户的
 	public final static class Return {
-		public final static String RT_Success = "1"; // 比对通过
-		public final static String RT_Fail = "0";// 系统判断为不同人
+		public final static String RT_Success = "0"; // 比对通过
+		public final static String RT_Fail = "2";// 系统判断为不同人
 		public final static String RT_Not_Compare = "-1";// 未比对（无人脸，多张人脸，服务器错误，链接超时）
-
+//说明:手机app调用的时候返回码发生了变化
+//		public final static String RT_Success = "1"; // 比对通过
+//		public final static String RT_Fail = "0";// 系统判断为不同人
+//		public final static String RT_Not_Compare = "-1";// 未比对（无人脸，多张人脸，服务器错误，链接超时）
+		
+		
 		public final static String RT_Source_Fail = "-2";// 多源认证接口调用结果（不为同一人，身份证号码不存在，姓名身份证不匹配）
 		public final static String RT_Source_Error = "-3";// 多源认证接口调用失败
 	}
@@ -50,7 +56,7 @@ public class EnumInstance {
 	public final class EReturnSource {
 		public final static String RT_Success = "0"; // 成功,是同一人
 
-		public final static String RT_InError = "-1400";// 服务器内部错误
+		public final static String RT_InError = "-1300";// 服务器内部错误
 		public final static String RT_Timeout = "-1401";// 远程连接超时错误
 	}
 
@@ -123,9 +129,16 @@ public class EnumInstance {
 		public final static String RT_NotMatch_Null_ID = "-1303"; // 证件号码必填
 		public final static String RT_NotMatch_Null_IDPhoto = "-1304"; // 证件翻拍照必填
 		public final static String RT_NotMatch_Null_UserPhoto = "-1305"; // 现场照必填
+		
+		public final static String RT_NotMatch_Null_CompareName = "-1401"; // 代理机构名称必须填写
+		public final static String RT_NotMatch_Null_OrgName = "-1402"; //机构名称必须填写
+		public final static String RT_NotMatch_Null_ServiceName = "-1403"; //业务类型名称必须填写
+		public final static String RT_NotMatch_Null_BarCode = "-1404"; //合同号名称必须填写
+		public final static String RT_NOTMATCH_NULL_SERVICENUMBER = "-1405"; //受理编号不能为空
+		
 
 		public final static String RT_NotMatch_Format_Login = "-1306"; // 登录名不正确
-		public final static String RT_NotMatch_Format_Busable = "-1310"; // 账户已停用
+		public final static String RT_NotMatch_Format_Busable = "-1104"; // 账户已停用
 
 		public final static String RT_NotMatch_Null_ChipPhoto = "-1307"; // 芯片照格式不正确
 		public final static String RT_NotMatch_Format_IDPhoto = "-1308"; // 证件翻拍照格式不正确
@@ -151,6 +164,14 @@ public class EnumInstance {
 			map.put(RT_NotMatch_Null_ID, "证件号码必填");
 			map.put(RT_NotMatch_Null_IDPhoto, "证件翻拍照必填");
 			map.put(RT_NotMatch_Null_UserPhoto, "现场照必填");
+			
+			
+			map.put(RT_NotMatch_Null_CompareName, "代理机构名称必须填写");
+			map.put(RT_NotMatch_Null_OrgName, "机构名称必须填写");
+			map.put(RT_NotMatch_Null_ServiceName, "业务类型名称必须填写");
+			map.put(RT_NotMatch_Null_BarCode, "合同号必须填写");
+			map.put(RT_NOTMATCH_NULL_SERVICENUMBER, "受理编号不能为空");
+			
 
 			map.put(RT_NotMatch_Format_Login, "登录名不正确");
 			map.put(RT_NotMatch_Format_Busable, "账户已停用");

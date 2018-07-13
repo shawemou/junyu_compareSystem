@@ -31,12 +31,6 @@ public class OCRController {
 	@ResponseBody
 	public String orc(@RequestParam("version") String version, @Valid OcrBean ocrBean, BindingResult result) {
 		OcrReturn ocrReturn = new OcrReturn();
-		/*try {
-			ocrBean.setId_photo(URLEncoder.encode(ocrBean.getId_photo(), "utf-8"));
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
 		logger.info("用户进行ocr识别");
 		try {
 			// 1,校验版本是否为空;判断版本号是否和内置的版本号一致

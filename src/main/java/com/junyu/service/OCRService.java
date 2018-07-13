@@ -59,7 +59,7 @@ public class OCRService extends BaseService<OcrHistory> {
 	public OcrReturn ocr(OcrBean ocrBean, OcrReturn or) {
 		JSONObject object = new JSONObject();
 		try {
-			object.put("front_photo", ocrBean.getClass());
+			object.put("front_photo", ocrBean.getId_photo());
 			object.put("head_option", 0);
 		} catch (JSONException e) {
 			e.printStackTrace();

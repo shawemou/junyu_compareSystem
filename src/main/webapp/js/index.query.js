@@ -61,7 +61,7 @@ function queryCallBack(data, textStatus) {
 	}
 
 	if (myobj["success"]) {
-		window.location.href = "mobile.html?date=" + newGuid();
+		window.location.href = "/CompareSystem/webAdmin/user-list.html?date=" + newGuid();
 	} else {
 		$("#err_msg").html(myobj["info"].replace('[','').replace(']',''));
 		$("#loading_Shadow").hide();

@@ -1,0 +1,333 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script><![endif]-->
+<!--/meta 作为公共模版分离出去-->
+
+<title>添加用户 </title>
+<meta name="keywords" content="">
+<meta name="description" content="。">
+</head>
+<body>
+	<article class="cl pd-20">
+		<form action="" method="post" class="form form-horizontal" id="userEditOrAdd">
+			<input type="hidden" value id="guid" />
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>登录名：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="" placeholder="登录名" id="loginName" name=""loginName">
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机号码：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" autocomplete="off" value="" placeholder="手机号码" id="mobile" name="mobile">
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>机主姓名：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" autocomplete="off" placeholder="机主姓名" id="name" name="name">
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>证件号码：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" autocomplete="off" placeholder="证件号码" id="id_number" name="id_number">
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>部门：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" autocomplete="off" placeholder="部门" id="department" name="department">
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>职务：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" autocomplete="off" placeholder="职务" id="duties" name="duties">
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>状态：</label>
+				<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+					<div class="radio-box">
+						<input name="busable" type="radio" id="busable-1" value="1"> <label for="busable-1">启用</label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" id="busable-2" name="busable" value="2"> <label for="busable-2">禁用</label>
+					</div>
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3">用户类型:</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<span class="select-box" style="width: 300px;"> <select class="select" name="parenttype" size="1" id="parenttype" >
+					</select>
+					</span>
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3">用机构分支:</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<span class="select-box" style="width: 300px;"> <select class="select" name="typeGuid" size="1" id="typeGuid" >
+					</select>
+					</span>
+				</div>
+			</div>
+			<div id="haveRole" class="row cl" style="display:none">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>无合同号操作权限：</label>
+				<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+					<div class="radio-box">
+						<input name="role1" type="radio" id="role1-0" value="0" checked="checked" > <label for="busable-1">开启</label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" id="role1-1" name="role1" value="1"> <label for="busable-2">禁用</label>
+					</div>
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3">性别:</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<span class="select-box" style="width: 300px;"> <select class="select" name="gender" size="1" id="gender" >
+						<option value="0">未知</option>
+						<option value="1">男</option>
+						<option value="2">女</option>
+					</select>
+					</span>
+				</div>
+			</div>
+
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3">备注：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<textarea name="detailDes" id="detailDes" cols="" rows="" class="textarea" placeholder="说点什么...100个字符以内" dragonfly="true" onKeyUp="textarealength(this,100)"></textarea>
+					<p class="textarea-numberbar">
+						<em class="textarea-length">0</em>/100
+					</p>
+				</div>
+			</div>
+			
+			<div id="err_msg" class="row cl" style="visibility: visible; color: red; margin-left: 370px;"></div>
+			<div class="row cl">
+				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+					<div id="mobileSaveBtn" class="btn btn-primary radius"  onclick="mobile_Save_AJAX()" value="" >&nbsp;&nbsp;提交&nbsp;&nbsp;</div>
+				</div>
+			</div>
+			
+		</form>
+	</article>
+
+	<!--_footer 作为公共模版分离出去-->
+	<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+	<script type="text/javascript" src="static/h-ui/js/H-ui.js"></script>
+	<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.page.js"></script>
+
+	<!--/_footer /作为公共模版分离出去-->
+
+	<!--请在下方写此页面业务相关的脚本-->
+	<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+	<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
+	<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript">
+	 
+		$(function() {
+			//所有的子类型 和 担保公司
+			typeArr = {};
+			//所有的总行 和 担保公司 和 市中心
+			typePareArr = {};
+			//所有的用户类型
+			allType = {};
+			//获取上面三个参数的值
+			getAllBank()
+			/* //获取所有的父级type
+			showAllType(); */
+			
+			//获取参数
+			paramToTable()
+			
+
+		});
+		
+		//获取参数
+		function paramToTable(){
+			var obj = getParam();
+			if(obj){
+				$("#loginName").val(obj.loginName);
+				$("#name").val(obj.name);
+				$("#mobile").val(obj.mobile);
+				$("#department").val(obj.department);
+				$("#id_number").val(obj.idNumber)
+				$("#duties").val(obj.duties);
+				$("#detailDes").val(obj.detailDes);
+				$("#guid").val(obj.guid);
+				debugger
+				if(obj.typeGuid=='000'&&obj.role1=='0'){
+					$("#haveRole").show();
+					$("#role1-0").attr("checked","checked")
+				}else if (obj.typeGuid=='000'&&obj.role1=='1'){
+					$("#haveRole").show();
+					$("#role1-1").attr("checked","checked")
+				}else{
+					$("#role1-0").attr("checked","checked")
+					$("#haveRole").hide();
+				}
+				if(obj.busable=='1'){
+					$("#busable-1").attr("checked","checked")
+				}else{
+					$("#busable-2").attr("checked","checked")
+				}
+				if(obj.gender=='1'){
+					$("#gender option").get(1).selected="selected";
+				}else if(obj.gender=='2'){
+					$("#gender option").get(2).selected="selected";
+				}
+
+				for ( var key in typePareArr) {
+					if(!obj.typeGuid){
+						return;
+					}
+					if (obj.typeGuid == key || obj.typeGuid.substring(0,2) == key) {
+						$("<option/>", {
+							val : key,
+							text : typePareArr[key],
+							selected : "selected"
+						}).appendTo($("#parenttype"))
+						$("#bankBranch").hide();
+					} else {
+						$("<option/>", {
+							val : key,
+							text : typePareArr[key]
+						}).appendTo($("#parenttype"))
+					}
+					
+				}
+				for ( var key in allType) {
+					$("#bankBranch").show();
+					if (obj.typeGuid == key) {
+						$("<option/>", {
+							val : key,
+							text : allType[key],
+							selected : "selected"
+						}).appendTo($("#typeGuid"))
+					}else if(obj.typeGuid.substring(0,2)==key.substring(0,2)){
+						$("<option/>", {
+							val : key,
+							text : allType[key]
+						}).appendTo($("#typeGuid"))
+					}
+				}
+			}else{
+				$("#haveRole").show();
+				resetAll();
+				//ToDo 新增
+				$("#busable-1").attr("checked","checked")
+				showAllType();
+				$("#parenttype option").children("[value=000]")
+			}
+			$("#parenttype [value=000]").insertBefore($("#parenttype [value=10]"));
+			$("#parenttype [value=999]").insertBefore($("#parenttype [value=10]"));
+		}
+		
+		function resetAll(){
+			$("#userEditOrAdd input").val("")
+			$("#busable-1").val("1");
+			$("#busable-2").val("2");
+			$("#role1-0").val("0");
+			$("#role1-1").val("1");
+		}
+		//新增展示所有的可选项
+		function showAllType() {
+			for ( var key in typePareArr) {
+				if (key!='000') {
+					$("<option/>", {
+						val : key,
+						text : typePareArr[key]
+					}).appendTo($("#parenttype"))
+				} else {
+					$("<option/>", {
+						val : key,
+						text : typePareArr[key],
+						selected : "selected"
+					}).appendTo($("#parenttype"))
+					$("<option/>", {
+						val : key,
+						text : typePareArr[key],
+						selected : "selected"
+					}).appendTo($("#typeGuid"))
+				}
+			}
+		}
+		
+		// 保存修改
+		function mobile_Save_AJAX() {
+			$("#err_msg").html("");
+			if ($("#loginName").val() == "") {
+				$("#err_msg").html("登录名为空");
+				return;
+			}
+			if ($("#mobile").val() == "") {
+				$("#err_msg").html("手机号码为空");
+				return;
+			}
+			if ($("#mobile").val().length > 11) {
+				$("#err_msg").html("手机号码长度大于11位");
+				return;
+			}
+			if ($("#name").val()=="") {
+				$("#err_msg").html("机主姓名为空");
+				return;
+			}
+			$("#mobileSaveBtn").attr("disabled", true);
+			var param = {};
+			param["guid"] = $("#guid").val();
+			param["loginName"] = $("#loginName").val();
+			param["mobile"] = $("#mobile").val();
+			param["name"] = $("#name").val();
+			param["gender"] = $("#gender").val();
+			param["idNumber"] = $("#id_number").val();
+			param["department"] = $("#department").val();
+			param["duties"] = $("#duties").val();
+			param["detailDes"] = $("#detail_des").val();
+			param["parenttype"] = $("#parenttype").val();
+			param["typeGuid"] = $("#typeGuid").val();
+			param["busable"] = $(":checked").get(0).value;
+			param["role1"]= $("#haveRole :checked").val();
+			if($("#guid").val()&&$("#guid").val()!=""){
+				var url = "/CompareSystem/web/updateUser.do";
+			}else{
+				var url = "/CompareSystem/web/saveMobile.do";
+			}
+			$.post(url, param, function(data, textStatus) {
+				$("#mobileQueryBtn").attr("disabled", false);
+				if (data["success"]) {
+					window.top.location.href = "user-list.html?data=" + newGuid();
+				} else {
+					$("#err_msg").html(data["info"]);
+				}
+			});
+
+		}
+	</script>
+	<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

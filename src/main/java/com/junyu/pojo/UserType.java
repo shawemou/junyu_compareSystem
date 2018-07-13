@@ -5,7 +5,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-@Table(name = "T_USER_TYPE")
+@Table(name = "F_USER_TYPE")
 public class UserType extends BasePojo implements Serializable {
     @Id
     @Column(name = "GUID")

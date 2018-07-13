@@ -17,6 +17,18 @@ public class CacheListBean {
 
 	@NotBlank(message = "用户类型id不能为空")
 	private String type_guid;
+	
+	@NotBlank(message="合同类型的id不能为空")
+	private String compare_guid;
+	
+
+	public String getCompare_guid() {
+		return compare_guid;
+	}
+
+	public void setCompare_guid(String compare_guid) {
+		this.compare_guid = compare_guid;
+	}
 
 	public String getBar_code() {
 		return bar_code;

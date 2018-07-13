@@ -1,0 +1,272 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!-- <link rel="Bookmark" href="favicon.ico">
+<link rel="Shortcut Icon" href="favicon.ico" /> -->
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script><![endif]-->
+<!--/meta 作为公共模版分离出去-->
+
+<title>银行使用率</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+
+<body>
+	<!--_header 作为公共模版分离出去-->
+	<header class="navbar-wrapper">
+		<div class="navbar navbar-fixed-top">
+			<div class="container-fluid cl">
+				<a class="logo navbar-logo f-l mr-10 hidden-xs" href="javascript:;"></a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="javascript:;"></a> <span class="logo navbar-slogan f-l mr-10 hidden-xs"></span> <a aria-hidden="false"
+					class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+				<nav class="nav navbar-nav"></nav>
+				<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+					<ul class="cl">
+						<li>管理员</li>
+						<li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+							<ul class="dropDown-menu menu radius box-shadow">
+								<li><a href="/CompareSystem/login.html">退出</a></li>
+							</ul></li>
+						<li id="Hui-skin" class="dropDown right dropDown_hover"><a href="javascript:;" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size: 18px">&#xe62a;</i></a>
+							<ul class="dropDown-menu menu radius box-shadow">
+								<li><a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
+								<li><a href="javascript:;" data-val="blue" title="蓝色">蓝色</a></li>
+								<li><a href="javascript:;" data-val="green" title="绿色">绿色</a></li>
+								<li><a href="javascript:;" data-val="red" title="红色">红色</a></li>
+								<li><a href="javascript:;" data-val="yellow" title="黄色">黄色</a></li>
+								<li><a href="javascript:;" data-val="orange" title="橙色">橙色</a></li>
+							</ul></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+	<!--/_header 作为公共模版分离出去-->
+
+	<!--_menu 作为公共模版分离出去-->
+	<aside class="Hui-aside">
+
+		<div class="menu_dropdown bk_2">
+			<dl id="menu-article">
+				<dt class="selected">
+					<i class="Hui-iconfont">&#xe616;</i> 管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+				</dt>
+				<dd style="display: block">
+					<ul>
+						<li class="current"><a href="user-list.html" title="用户管理">用户管理</a></li>
+						<li class="current"><a href="business-list.html" title="业务查询">业务查询</a></li>
+						<li class="current"><a href="rate-list.html" title="银行使用率">银行使用率</a></li>
+						<li class="current"><a href="offline-list.html" title="离线用户清单">离线用户清单</a></li>
+					</ul>
+				</dd>
+			</dl>
+
+		</div>
+	</aside>
+	<div class="dislpayArrow hidden-xs">
+		<a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
+	</div>
+	<!--/_menu 作为公共模版分离出去-->
+
+	<section class="Hui-article-box">
+		<nav class="breadcrumb">
+			<i class="Hui-iconfont">&#xe67f;</i> 管理<span class="c-gray en">&gt;银行使用率<a class="btn btn-success radius r" style="line-height: 1.6em; margin-top: 3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+		</nav>
+		<div class="Hui-article">
+			<article class="cl pd-20">
+				<div class="text-c">
+					<div style="padding: 5px; float: left;">
+						</select><span class="alert-msg">&nbsp;</span> <label>&nbsp&nbsp用户类型&nbsp:</label> <select class="input-text" style="background-color: #c9daf8; width: 250px" name="parenttype" id="parenttype"></select> <span class="alert-msg">&nbsp;</span>
+					</div>
+					<div id="bankBranch" style="padding: 5px; float: left; display: none">
+						<label>机构分支:</label> <select class="input-text" style="background-color: #c9daf8; width: 250px" name="typeGuid" maxlength="25" id="typeGuid"></select><span class="alert-msg">&nbsp;</span>
+					</div>
+					<div style="padding: 5px; float: left">
+						<button name="" id="user_search" class="btn btn-success" type="submit">
+							<i class="Hui-iconfont">&#xe665;</i> 查询
+						</button>
+					</div>
+				</div>
+				<div style="padding: 5px; float: left; width: 1100px">
+					<span class=""> <i class=""></i></a>
+					</span>
+				</div>
+				<div class="mt-20">
+
+					<table id="user_list" class="table table-border table-bordered table-bg table-hover table-sort">
+						<thead>
+							<tr class="text-c">
+								<th width="100">银行名称</th>
+								<th width="100">处理总数量</th>
+								<th width="90">认证一致数量</th>
+								<th width="150">成功占比(%)</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<!--_footer 作为公共模版分离出去-->
+	<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+	<script type="text/javascript" src="static/h-ui/js/H-ui.js"></script>
+	<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.page.js"></script>
+	<!--/_footer /作为公共模版分离出去-->
+
+	<!--请在下方写此页面业务相关的脚本-->
+	<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript">
+		//所有的子类型 和 担保公司
+		typeArr = {};
+		//所有的总行 和 担保公司 和 市中心
+		typePareArr = {};
+		//所有的用户类型
+		allType = {};
+		//获取上面三个参数的值
+		getAllBank()
+		//获取所有的父级type
+		showAllType();
+		$("#parenttype [value=999]").insertBefore($("#parenttype [value=10]"));
+
+		var param = {};
+		param["beginDate"] = encodeURI($("#logmin").val());
+		param["endDate"] = encodeURI($("#logmax").val());
+		param["parenttype"] = encodeURI($("#parenttype").val());
+		param["barCode"] = $("#barCode").val();
+		param["returnCode"] = $("#returnCode").val();
+		param["typeGuid"] = $("#typeGuid").val();
+
+		$("#user_search").click(function() {
+			param["parenttype"] = encodeURI($("#parenttype").val());
+			param["typeGuid"] = $("#typeGuid").val();
+			mytable.ajax.reload();
+		})
+
+		myStart();
+		function myStart() {
+			mytable = $('.table-sort')
+					.DataTable(
+							{
+								"searching" : true,
+								"ajax" : { //ajax方式向后台发送请求
+									"type" : "POST",
+									"url" : "/CompareSystem/web/rateList1.do",
+									"data" : function(d) {
+										d.parenttype = param.parenttype;
+										d.typeGuid = param.typeGuid;
+									},//传递的数据
+									"dataType" : "json",
+									"async" : false,
+									"dataSrc" : "aaData"
+								},
+								//开启表格分页
+								"paging" : true,
+								"bProcessing" : true,
+								"bServerSide" : true,
+								"bAutoWidth" : false,
+								"deferRender" : true,//延迟渲染
+								"iDisplayLength" : 10,
+								"iDisplayStart" : 0,
+								"Language" : { // 国际化配置
+									"sProcessing" : "正在获取数据，请稍后...",
+									"sLengthMenu" : "显示 _MENU_ 条",
+									"sZeroRecords" : "没有找到数据",
+									"sInfo" : "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
+									"sInfoEmpty" : "记录数为0",
+									"sInfoFiltered" : "(全部记录数 _MAX_ 条)",
+									"sInfoPostFix" : "",
+									"sSearch" : "查询",
+									"sUrl" : "",
+									"oPaginate" : {
+										"sFirst" : "第一页",
+										"sPrevious" : "上一页",
+										"sNext" : "下一页",
+										"sLast" : "最后一页"
+									}
+								},
+								//渲染
+								"columnDefs" : [
+										{
+											//机构名称
+											"render" : function(data, type, row) {
+												return allType[data] == null ? "" : allType[data];
+											},
+											"targets" : 0
+										},
+										{
+											//处理总数量
+											"render" : function(data, type, row) {
+												return data==null?0:data;
+											},
+											"targets" : 1
+										},
+										{
+											//认证一致数量
+											"render" : function(data, type, row) {
+												return data==null?0:data;
+											},
+											"targets" : 2
+										},
+										{
+											//成功占比
+											"render" : function(data, type, row) {
+												return row.rightCount/row.totalCount;
+											},
+											"targets" : 3
+										}],
+								columns : [ {
+									data : 'typeId'
+								}, {
+									data : 'totalCount'
+								}, {
+									data : 'rightCount'
+								}, {
+									data : 'rightCount'
+								}]
+							});
+		}
+
+
+		//展示所有的父级类别
+		function showAllType() {
+			$("<option/>", {
+				val : "",
+				text : "--- 请选择用户类型 ---",
+				selected : "selected"
+			}).appendTo($("#parenttype"))
+			for ( var key in typePareArr) {
+				if(key!="000"){
+					$("<option/>", {
+						val : key,
+						text : typePareArr[key]
+					}).appendTo($("#parenttype"))
+				}
+			}
+		}
+		$("#user_list_filter").hide();
+		
+	</script>
+	<!--/请在上方写此页面业务相关的脚本-->
+</body>
+
+</html>

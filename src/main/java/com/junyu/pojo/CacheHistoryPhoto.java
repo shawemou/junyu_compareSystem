@@ -5,7 +5,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-@Table(name = "T_CACHE_HISTORY_PHOTO")
+@Table(name = "F_CACHE_HISTORY_PHOTO")
 public class CacheHistoryPhoto extends BasePojo implements Serializable {
     @Id
     @Column(name = "GUID")

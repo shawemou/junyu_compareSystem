@@ -36,7 +36,7 @@
 	</resultMap>
 
 	<insert id="movedate" parameterType="String">
-		INSERT INTO "RC"."T_COMPARE"
+		INSERT INTO "RC"."F_COMPARE"
 		(
 			"GUID",
 			"USER_GUID",
@@ -58,7 +58,7 @@
 		)
 		select
 			"GUID",
-			"USER_GUID",
+			#{cacheListBean.user_guid} "USER_GUID",
 			"NAME",
 			"ID_NUMBER" "CERTID",
 			"RETURN_CODE",
@@ -70,16 +70,16 @@
 			"HOLD_TIME",
 			"USER_TYPE",
 			"TYPE_NAME",
-			"COMPARE_TYPE",
+			#{cacheListBean.compare_guid} "COMPARE_TYPE",
 			"BAR_CODE",
 			"ID_TYPE" "CERTID_TYPE",
 			"MOBILE"
 		from
-			"RC"."T_CACHE_HISTORY" T
+			"RC"."F_CACHE_HISTORY" T
 		WHERE T.ETYPE='1' AND T.BAR_CODE = #{barCode}
 	</insert>
 
-	<select id="selectRateList" resultType="rate" parameterType="com.junyu.common.requestBean.WebStatBean">
+	<select id="selectRateList" resultType="rate" >
 		SELECT
 			TYPEID typeId,
 			TOTALCOUNT totalCount,
@@ -97,7 +97,11 @@
 							COUNT (1) totalCount,
 							COMPARE_TYPE typeId
 						FROM
-							T_COMPARE
+							F_COMPARE
+						WHERE
+							BAR_FLAG = '0'
+							AND
+							COMPARE_TYPE &lt;&gt; '000'
 						GROUP BY
 							COMPARE_TYPE
 						ORDER BY
@@ -108,9 +112,13 @@
 						COUNT (1) rightCount,
 						COMPARE_TYPE typeId
 					FROM
-						T_COMPARE
+						F_COMPARE
 					WHERE
 						RETURN_CODE = '0'
+						AND
+						BAR_FLAG = '0'
+						AND
+						COMPARE_TYPE &lt;&gt; '000'
 					GROUP BY
 						COMPARE_TYPE
 					ORDER BY
@@ -119,7 +127,7 @@
 			)
 		WHERE
 			RN BETWEEN #{begin} AND #{end}
-			<if test="statBean.typeGuid!=null">
+			<if test="statBean.typeGuid!=null and statBean.typeGuid.trim()!='' and statBean.typeGuid!='null' " >
 				and TYPEID = #{statBean.typeGuid}
 			</if>
 	</select>
@@ -132,7 +140,11 @@
 				SELECT
 					COUNT (1)
 				FROM
-					T_COMPARE
+					F_COMPARE
+				WHERE
+					BAR_FLAG = '0'
+					AND
+					COMPARE_TYPE &lt;&gt; '000'
 				GROUP BY
 					COMPARE_TYPE
 			)

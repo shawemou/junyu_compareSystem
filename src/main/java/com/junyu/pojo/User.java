@@ -8,7 +8,7 @@ import javax.persistence.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-@Table(name = "T_USER")
+@Table(name = "F_USER")
 public class User extends BasePojo implements Serializable {
     @Id
     @Column(name = "GUID")
@@ -64,13 +64,36 @@ public class User extends BasePojo implements Serializable {
     
     @Column(name = "DUTIES")
     private String duties;
+    
+
+    @Column(name = "ROLE1")
+    private String role1;
+
+    @Column(name = "ROLE2")
+    private String role2;
 
 
     private static final long serialVersionUID = 1L;
     
     
 
-    public String getDuties() {
+    public String getRole1() {
+		return role1;
+	}
+
+	public void setRole1(String role1) {
+		this.role1 = role1;
+	}
+
+	public String getRole2() {
+		return role2;
+	}
+
+	public void setRole2(String role2) {
+		this.role2 = role2;
+	}
+
+	public String getDuties() {
 		return duties;
 	}
 

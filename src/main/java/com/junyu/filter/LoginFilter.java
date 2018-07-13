@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class LoginFilter implements Filter {
@@ -20,6 +21,7 @@ public class LoginFilter implements Filter {
 	// 对全局访问进行控制
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse resp =(HttpServletResponse) response; 
 		String login = req.getRequestURL().toString().toUpperCase();
 
 		// if(login.indexOf("MOBILE.HTML") > 0){
@@ -42,7 +44,7 @@ public class LoginFilter implements Filter {
 					printWriter.flush();
 					printWriter.close();
 				} else {
-					request.getRequestDispatcher("login.html").forward(request, response);
+					resp.sendRedirect("/CompareSystem/login.html");
 				}
 			}
 		} else {

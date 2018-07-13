@@ -19,7 +19,7 @@
 	  	SELECT
 			DISTINCT(USER_GUID)
 		FROM
-			T_USER_LOGIN_LOG
+			F_USER_LOGIN_LOG
 		WHERE
 		CREATE_TIME > ADD_MONTHS (SYSDATE ,- #{offlineTime}) 
   </select>

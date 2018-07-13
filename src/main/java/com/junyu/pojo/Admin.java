@@ -8,7 +8,7 @@ import javax.persistence.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-@Table(name = "T_ADMIN")
+@Table(name = "F_ADMIN")
 public class Admin extends BasePojo implements Serializable {
     @Id
     @Column(name = "GUID")
