@@ -77,6 +77,8 @@
 		from
 			"RC"."F_CACHE_HISTORY" T
 		WHERE T.ETYPE='1' AND T.BAR_CODE = #{barCode}
+			AND T.COMPARE_TYPE= #{cacheListBean.compare_guid}
+		
 	</insert>
 
 	<select id="selectRateList" resultType="rate" >

@@ -107,8 +107,8 @@ public class CompareService extends BaseService<Compare> {
 			Map<String, Object> map_tmep = new HashMap<String, Object>();
 			// 遍历第一个list
 			for (Compare map : compareList) {
-				if (!map_tmep.containsKey(map.getName().toString() + "||" + map.getCertid().toString() + "||" + map.getReturnCode().toString())) {
-					map_tmep.put(map.getName().toString() + "||" + map.getCertid().toString() + "||" + map.getReturnCode().toString(), null);
+				if (!map_tmep.containsKey(map.getName()+"" + "||" + map.getCertid()+"" + "||" + map.getReturnCode()+"")) {
+					map_tmep.put(map.getName()+"" + "||" + map.getCertid()+"" + "||" + map.getReturnCode()+"", null);
 					dataList.add(map);
 				}
 			}
@@ -257,7 +257,6 @@ public class CompareService extends BaseService<Compare> {
 		compare.setCode3(bean.getCrBean3()==null?null:bean.getCrBean3().getCode());
 		compare.setGuid(viBean.getGuid());
 		compare.setHoldTime(viBean.getBeginDate()==null?null:(new BigDecimal(new Date().getTime() - viBean.getBeginDate().getTime())));
-		compare.setName(viBean.getCompareBean().getName());
 		compare.setReturnCode(bean.getCode());
 		compare.setReturnInfo(bean.getInfo());
 		compare.setSimilarity1(new BigDecimal(bean.getCrBean1()==null?-1:bean.getCrBean1().getSimilarity()));

@@ -40,7 +40,7 @@ public class LoginFilter implements Filter {
 				String requestType = ((HttpServletRequest) request).getHeader("X-Requested-With");
 				if (requestType != null && "XMLHttpRequest".equals(requestType)) {
 					PrintWriter printWriter = response.getWriter();
-					printWriter.print("{\"sessionState\":0}");
+					printWriter.print("{\"sessionState\":0}"); 
 					printWriter.flush();
 					printWriter.close();
 				} else {

@@ -137,7 +137,7 @@ public class UserService extends BaseService<User> {
 			return br;
 		}
 
-		if (user.getBusable() != null && user.getBusable().toString().equals("0")) {
+		if (user.getBusable() != null && user.getBusable().toString().equals("2")) {
 			br.setSuccess(false);
 			br.setInfo("与本手机号相关联的配置已停用");
 			br.setCode(EReturnLogin.RT_NotMatch_Format_Busable);

@@ -46,8 +46,8 @@ public class CacheService extends BaseService<CacheHistory> {
 			// 2,±éÀú
 			Map<String, Object> map_tmep = new HashMap<String, Object>();
 			for (CacheHistory map : cacheList) {
-				if (!map_tmep.containsKey(map.getName().toString() + "||" + map.getIdNumber().toString() + "||" + map.getReturnCode().toString())) {
-					map_tmep.put(map.getName().toString() + "||" + map.getIdNumber().toString() + "||" + map.getReturnCode().toString(), null);
+				if (!map_tmep.containsKey(map.getName()+"" + "||" + map.getIdNumber()+"" + "||" + map.getReturnCode()+"")) {
+					map_tmep.put(map.getName()+""+ "||" + map.getIdNumber()+"" + "||" + map.getReturnCode()+"", null);
 					dataList.add(map);
 				}
 			}

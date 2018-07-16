@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.alibaba.fastjson.JSONObject;
+import com.junyu.common.returnBean.BaseReturn;
+import com.junyu.common.returnBean.EnumInstance.EReturnLogin;
 import com.junyu.pojo.User;
 import com.junyu.service.UserService;
 import com.junyu.utils.SpringBeanUtils;
@@ -41,9 +44,13 @@ public class AppFilter implements Filter {
 				String userGuid = req.getParameter("user_guid");
 				UserService userService = (UserService) SpringBeanUtils.getBean(UserService.class);
 				User user = userService.queryById(userGuid);
-				if(user.getBusable()=="2"){
+				if(user==null||StringUtils.equals("2", user.getBusable())){
 					isGo=false;
-					response.getOutputStream().write("{\"success\":\"false\"}".getBytes("GBK"));
+					BaseReturn br = new BaseReturn();
+					br.setSuccess(false);
+					br.setCode(EReturnLogin.RT_NotMatch_Format_Busable);
+					br.setInfo(EReturnLogin.map.get(EReturnLogin.RT_NotMatch_Format_Busable));
+					response.getOutputStream().write(JSONObject.toJSONString(br).getBytes("GBK"));
 				}
 			}
 		}
