@@ -30,6 +30,7 @@ public class UrlConnect {
 	private static Logger logger = Logger.getLogger(UrlConnect.class);
 
 	public String connectPostMethod(NameValuePair[] data, String url) {
+		
 		logger.debug(url);
 		HttpClient httpClient = new HttpClient();
 		PostMethod postMethod = new PostMethod(url);

@@ -1,5 +1,6 @@
 package com.junyu.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
+import com.custle.sdk.Log4jUtil;
+import com.custle.sdk.TestIDPhotoAuthService;
+import com.junyu.common.requestBean.CompareBean1;
+import com.junyu.common.requestBean.CompareBean2;
 import com.junyu.common.requestBean.WebMobileBean;
 import com.junyu.common.requestBean.WebStatBean;
 import com.junyu.common.returnBean.BaseReturn;
@@ -30,6 +36,8 @@ import com.junyu.service.UserService;
 import com.junyu.service.UserTypeService;
 import com.junyu.utils.AESCodec;
 import com.junyu.utils.CommonUtils;
+import com.junyu.utils.IPUtils;
+import com.junyu.webservice.WebserviceImpl;
 
 @Controller
 @RequestMapping("web")
@@ -385,5 +393,51 @@ public class WebUserController {
 			e.printStackTrace();
 		}
 		return map;
+	}
+	
+	
+	@Autowired
+	private IPUtils ipUtils;
+	
+	@RequestMapping(value = "desk", method = { RequestMethod.POST, RequestMethod.GET })
+	@ResponseBody
+	public String deskRequest(@RequestParam("jsonString")String jsonString) {
+ 		WebserviceImpl webService = new WebserviceImpl();
+		String result = webService.method(jsonString);
+		return  result ;
+	}
+	
+	@RequestMapping(value = "desk1", method = { RequestMethod.POST, RequestMethod.GET })
+	@ResponseBody
+	public String deskRequest1(@RequestParam(value="strIDPhoto",required=false) String strIDPhoto, @RequestParam(value="type",required=false) String type ,
+							   @RequestParam(value="loginName",required=false) String loginName, @RequestParam(value="name",required=false) String  name,
+							   @RequestParam(value="certid",required=false) String certid, @RequestParam(value="vaild_priod",required=false) String vaild_priod ,
+							   @RequestParam(value="strUserPhoto") String strUserPhoto, @RequestParam(value="strChipPhoto",required=false) String  strChipPhoto,
+							   @RequestParam(value="sex",required=false) String sex, @RequestParam(value="birthday",required=false) String  birthday,
+							   @RequestParam(value="fork",required=false) String fork, @RequestParam(value="address",required=false) String  address,
+							   @RequestParam(value="issue_authority",required=false) String issue_authority, @RequestParam(value="compareName",required=false) String compareName ,
+							   @RequestParam(value="barCode",required=false)String barCode) {
+		String jsonString = JSONObject.toJSONString(null);
+		WebserviceImpl webService = new WebserviceImpl();
+		String result = webService.method(jsonString);
+		return  result ;
+	} 
+	
+	@RequestMapping(value = "desk2", method = { RequestMethod.POST, RequestMethod.GET })
+	@ResponseBody
+	public String deskRequest2(CompareBean1 compareBean1) {
+ 		String jsonString = JSONObject.toJSONString(compareBean1);
+		WebserviceImpl webService = new WebserviceImpl();
+		String result = webService.method(jsonString);
+		return  result ;
+	}
+	
+	@RequestMapping(value = "desk3", method = { RequestMethod.POST, RequestMethod.GET })
+	@ResponseBody
+	public String deskRequest3(CompareBean2 compareBean2) {
+		String jsonString = JSONObject.toJSONString(compareBean2);
+		WebserviceImpl webService = new WebserviceImpl();
+		String result = webService.method(jsonString);
+		return  result ;
 	}
 }

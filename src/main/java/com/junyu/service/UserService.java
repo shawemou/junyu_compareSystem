@@ -88,6 +88,9 @@ public class UserService extends BaseService<User> {
 			br.setCode(EReturnLogin.RT_NotMatch_Format_Login);
 			return br;
 		} else {
+			HashMap<String, Object> map = new HashMap<String,Object>();
+			map.put("user", users.get(0));
+			br.setDbInfo(map);
 			return this.validate(users.get(0), loginBean, br);
 		}
 	}

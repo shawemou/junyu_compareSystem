@@ -57,7 +57,6 @@ import com.junyu.utils.Base64ImgUtil;
 import com.junyu.utils.CommonUtils;
 import com.junyu.utils.GUID;
 import com.junyu.utils.IPUtils;
-import com.sun.tools.javac.comp.Check;
 
 @Service
 public class CompareService extends BaseService<Compare> {
@@ -193,7 +192,49 @@ public class CompareService extends BaseService<Compare> {
 				cr.setInfo(EReturnCompareCode.map.get(cr.getReturn_code()));
 			}
 		}
+		
+		/**
+		 * 当身份证比对为同一人时，调用
+		 * 多源认证接口服务
+		 */
+		if(cr.getSuccess() && StringUtils.equals(compareBean.getId_type(), "1")){
+			//本地两照比对为同一人
+			if(cr.getCode().equals(Return.RT_Success)){
+				sourceCompare(compareBean, cr);
+				if(cr.getsCode().equals(EReturn.RT_InError) || cr.getsCode().equals(EReturn.RT_Timeout)){
+					cr.setSuccess(false);
+					cr.setCode( Return.RT_Source_Error );
+					cr.setInfo("多源认证接口调用失败");
+				}else if( !cr.getsCode().equals(EReturn.RT_Success)){
+					cr.setSuccess(false);
+					cr.setCode( Return.RT_Source_Fail );
+					cr.setInfo("多源认证接口调用结果:" + cr.getsInfo());
+				}
+			}
+		}
 		return cr;
+	}
+	
+	private static void sourceCompare(CompareBean compareBean, CompareReturn cr){
+		Date beginDate = new Date();
+		String resultString = TestIDPhotoAuthService.runQryIDPhoto(compareBean.getName(),compareBean.getId_number(),compareBean.getPhoto_id());
+		cr.setSholdTime( new Date().getTime() - beginDate.getTime());
+		if( StringUtils.isNotBlank(resultString)){
+			try {
+				JSONObject json = new JSONObject(resultString);
+				if(json.has("Result") && StringUtils.isNotBlank(json.get("Result")+"") ){
+					cr.setsCode(json.get("Result")+"");
+				}
+				if(json.has("Return") && StringUtils.isNotBlank(json.get("Return")+"") ){
+					cr.setsInfo(json.get("Return")+"");
+				}
+			} catch (JSONException e) {
+				Log4jUtil.log.error("解析多源认证接口返回json异常", e);
+				cr.setsCode(EReturn.RT_InError);
+			}
+		}else{
+			cr.setsCode(EReturn.RT_Timeout);
+		}
 	}
 
 	/**
@@ -252,6 +293,8 @@ public class CompareService extends BaseService<Compare> {
 	*/
 	public void saveWebServiceCompare(VisitInfoBean viBean, ReturnBean bean) {
 		Compare compare = viBean.getCompare();
+		String ip = ipUtils.getIpAddr();
+		compare.setIp(ip);
 		compare.setCode1(bean.getCrBean1()==null?null:bean.getCrBean1().getCode());
 		compare.setCode2(bean.getCrBean2()==null?null:bean.getCrBean2().getCode());
 		compare.setCode3(bean.getCrBean3()==null?null:bean.getCrBean3().getCode());

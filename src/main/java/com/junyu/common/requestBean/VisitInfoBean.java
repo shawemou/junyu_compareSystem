@@ -16,6 +16,7 @@ import com.junyu.pojo.ComparePhoto;
 import com.junyu.pojo.User;
 import com.junyu.pojo.UserLoginLog;
 import com.junyu.utils.CommonUtils;
+import com.junyu.utils.SpringBeanUtils;
 
 public class VisitInfoBean {
 
@@ -40,11 +41,12 @@ public class VisitInfoBean {
 
 	public VisitInfoBean() {
 
-		Message message = PhaseInterceptorChain.getCurrentMessage();
-		HttpServletRequest httprequest = (HttpServletRequest) message.get(AbstractHTTPDestination.HTTP_REQUEST);
+		//Message message = PhaseInterceptorChain.getCurrentMessage();
+		//HttpServletRequest httprequest = (HttpServletRequest)SpringBeanUtils.getBean(HttpServletRequest.class);
+				//message.get(AbstractHTTPDestination.HTTP_REQUEST);
 		 
 		this.guid = CommonUtils.getUUID();
-		this.ip = httprequest.getRemoteAddr();
+		//this.ip = httprequest.getRemoteAddr();
 
 	}
 

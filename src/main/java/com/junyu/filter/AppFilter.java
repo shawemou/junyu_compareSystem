@@ -23,7 +23,6 @@ import com.junyu.pojo.User;
 import com.junyu.service.UserService;
 import com.junyu.utils.SpringBeanUtils;
 
-
 public class AppFilter implements Filter {
 
 	@Override
@@ -37,15 +36,16 @@ public class AppFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		String login = req.getRequestURL().toString().toUpperCase();
 		boolean isGo = true;
+		if (login.indexOf("DESK") > 0) {
 
-		if (login.indexOf("WEB")<=0) {
+		} else if (login.indexOf("WEB") <= 0) {
 			req = new MyRequest(req);
-			if(login.indexOf("LOGIN.DO")<=0&&login.indexOf("PWDMODIFY.DO")<=0){
+			if (login.indexOf("LOGIN.DO") <= 0 && login.indexOf("PWDMODIFY.DO") <= 0) {
 				String userGuid = req.getParameter("user_guid");
 				UserService userService = (UserService) SpringBeanUtils.getBean(UserService.class);
 				User user = userService.queryById(userGuid);
-				if(user==null||StringUtils.equals("2", user.getBusable())){
-					isGo=false;
+				if (user == null || StringUtils.equals("2", user.getBusable())) {
+					isGo = false;
 					BaseReturn br = new BaseReturn();
 					br.setSuccess(false);
 					br.setCode(EReturnLogin.RT_NotMatch_Format_Busable);
@@ -54,8 +54,8 @@ public class AppFilter implements Filter {
 				}
 			}
 		}
-		
-		if(isGo){
+
+		if (isGo) {
 			// ·ÅÐÐ
 			chain.doFilter(req, response);
 		}
@@ -80,7 +80,7 @@ public class AppFilter implements Filter {
 
 		public String getParameter(String name) {
 			String value = super.getParameter(name);
-			if(StringUtils.isNoneBlank(value)){
+			if (StringUtils.isNoneBlank(value)) {
 				try {
 					value = new String(URLDecoder.decode(value, "UTF-8"));
 				} catch (UnsupportedEncodingException e) {
@@ -92,7 +92,7 @@ public class AppFilter implements Filter {
 
 		public String[] getParameterValues(String name) {
 			String[] values = super.getParameterValues(name);
-			if(ArrayUtils.isNotEmpty(values)){
+			if (ArrayUtils.isNotEmpty(values)) {
 				for (int i = 0; i < values.length; i++) {
 					try {
 						values[i] = new String(URLDecoder.decode(values[i], "UTF-8"));

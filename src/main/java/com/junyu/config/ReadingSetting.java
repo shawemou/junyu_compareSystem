@@ -42,13 +42,13 @@ public class ReadingSetting {
 	@Value("${project.version}")
 	private String version;
 	
-	@Value("compare.similarity1")
+	@Value("${compare.similarity1}")
 	private String similarity1;
 	
-	@Value("compare.similarity2")
+	@Value("${compare.similarity2}")
 	private String similarity2;
 	
-	@Value("compare.similarity3")
+	@Value("${compare.similarity3}")
 	private String  similarity3;
 
 	public ReadingSetting() {

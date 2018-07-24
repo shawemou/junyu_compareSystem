@@ -325,4 +325,13 @@ public class User extends BasePojo implements Serializable {
         this.typeName = typeName;
     }
 
+	@Override
+	public String toString() {
+		return "User [guid=" + guid + ", loginName=" + loginName + ", password=" + password + ", name=" + name + ", gender=" + gender + ", idNumber="
+				+ idNumber + ", department=" + department + ", busable=" + busable + ", detailDes=" + detailDes + ", userGuid=" + userGuid + ", createTime="
+				+ createTime + ", secretType=" + secretType + ", updateTime=" + updateTime + ", mobile=" + mobile + ", typeGuid=" + typeGuid + ", typeName="
+				+ typeName + ", duties=" + duties + ", role1=" + role1 + ", role2=" + role2 + "]";
+	}
+
+    
 }

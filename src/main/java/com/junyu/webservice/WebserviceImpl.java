@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import com.custle.sdk.Log4jUtil;
 import com.junyu.common.requestBean.VisitInfoBean;
-import com.junyu.common.returnBean.EReturnCompareCode;
 import com.junyu.common.returnBean.EnumInstance;
 import com.junyu.common.returnBean.EnumInstance.EReturnCompare;
 import com.junyu.common.returnBean.EnumInstance.EReturnLogin;
@@ -92,7 +91,7 @@ public class WebserviceImpl implements IWebservice {
 			e.printStackTrace();
 			bean.setCode(EReturnSource.RT_InError);
 		}
-
+		
 		// 4,返回给用户并入库
 		return getReturnStr(viBean, bean);
 	}
@@ -103,6 +102,7 @@ public class WebserviceImpl implements IWebservice {
 			json.put("code", Integer.parseInt(bean.getCode()));
 			if (EnumInstance.loginType.equals(viBean.getType())) {
 				json.put("info", EReturnLogin.map.get(bean.getCode()));
+				json.put("user",com.alibaba.fastjson.JSONObject.toJSONString((User)bean.getDbInfo().get("user")));
 			} else if (EnumInstance.modifyPwdType.equals(viBean.getType())) {
 				json.put("info", EReturnModifyPwd.map.get(bean.getCode()));
 			} else if (EnumInstance.compareType.equals(viBean.getType())) {

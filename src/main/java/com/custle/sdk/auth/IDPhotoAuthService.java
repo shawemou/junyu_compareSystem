@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.PrivateKey;
 import java.security.Signature;
 import java.security.SignatureException;
+import java.util.HashMap;
 
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.log4j.Logger;
@@ -12,6 +13,7 @@ import org.bouncycastle.util.encoders.Base64;
 import com.custle.sdk.auth.vo.IDPhotoAuthFace;
 import com.custle.sdk.auth.vo.IDPhotoAuthRequest;
 import com.custle.sdk.auth.vo.Person;
+import com.custle.sdk.common.util.HttpUtils;
 import com.custle.sdk.common.util.P12CertificateInfo;
 import com.custle.sdk.common.util.ReadPropertiesUtil;
 import com.custle.sdk.common.util.UrlConnect;
@@ -56,15 +58,17 @@ public class IDPhotoAuthService {
 
 		String json = mapper.writeValueAsString(faceRequest);
 
-//		logger.info("request == " + json);
+		String sign = sign(json) ;
 		
 		NameValuePair[] params = { new NameValuePair("IDPhotoRequest", json),
 				new NameValuePair("SignatureAlgorithm", signAlg),
-				new NameValuePair("SignatureValue", sign(json)) };
-
+				new NameValuePair("SignatureValue", sign) };
+		
 		UrlConnect urlConnect = new UrlConnect();
-		String resultString = urlConnect.connectPostMethod(params, url
-				+ "/services/idphotoAuth");
+		
+		String resultString =urlConnect.connectPostMethod(params, url+ "/services/idphotoAuth");
+		
+				
 		logger.debug("response == " + resultString);
 		// FaceResponse faceResponse = (FaceResponse) mapper.readValue(
 		// resultString, FaceResponse.class);
@@ -80,7 +84,7 @@ public class IDPhotoAuthService {
 
 			Signature signature = Signature.getInstance(signAlg);
 			signature.initSign(priKey);
-			signature.update(inData.getBytes());
+			signature.update(inData.getBytes("gbk"));
 			signValue = new String(Base64.encode(signature.sign()));
 		} catch (Exception e) {
 			e.printStackTrace();

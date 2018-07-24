@@ -34,19 +34,20 @@ public class WSSourceCompareServerThread extends Thread {
 
 	public void run() {
 		CompareReturnBean crBean4 = new CompareReturnBean();// 多源认证接口比对结果
-		String resultString = TestIDPhotoAuthService.runQryIDPhoto(viBean.getCompareBean().getName(), viBean.getCompareBean().getId_number(), viBean
+		String resultString = TestIDPhotoAuthService.runQryIDPhoto(viBean.getCompare().getName(), viBean.getCompare().getCertid(), viBean
 				.getCompareBean().getPhoto_id());
 		if (StringUtils.isNotBlank(resultString)) {
 			try {
 				JSONObject json = new JSONObject(resultString);
-				if (json.has("Result") && StringUtils.isNotBlank(json.getString("Result"))) {
-					crBean4.setCode(json.getString("Result"));
+				if (json.has("Result") && StringUtils.isNotBlank(json.get("Result")+"")) {
+					crBean4.setCode(json.get("Result")+"");
 				}
-				if (json.has("Return") && StringUtils.isNotBlank(json.getString("Return"))) {
-					crBean4.setInfo(json.getString("Return"));
+				if (json.has("Return") && StringUtils.isNotBlank(json.get("Return")+"")) {
+					crBean4.setInfo(json.get("Return")+"");
 				}
 			} catch (JSONException e) {
 				Log4jUtil.log.error("解析多源认证接口返回json异常", e);
+				e.printStackTrace();
 			}
 
 			if (StringUtils.isNotBlank(crBean4.getCode()) || StringUtils.isNotBlank(crBean4.getInfo())) {

@@ -81,7 +81,7 @@ public class CompareValidate {
 				boo = false;
 			} else {
 				comparePhoto.setPhotoUser(Base64ImgUtil.fromBase64(json.getString("strUserPhoto")));
-				viBean.getCompareBean().setPhoto_user(json.getString("strIDPhoto"));
+				viBean.getCompareBean().setPhoto_user(json.getString("strUserPhoto"));
 			}
 
 			// 芯片照不必填
@@ -114,6 +114,9 @@ public class CompareValidate {
 			viBean.setComparePhoto(comparePhoto);
 			
 			userService.validateUser(viBean, bean);
+			if(!bean.getSuccess()){
+				return false;
+			}
 			//1,如果为中心用户
 			if (StringUtils.equals(viBean.getUser().getTypeGuid(), "000")) {
 				// 1.1有合同号
@@ -150,7 +153,7 @@ public class CompareValidate {
 					}
 					// 1.2.3受理编号不能为空
 					if (!json.has("serviceNumber") || StringUtils.isBlank(json.getString("serviceNumber"))) {
-						bean.setCode(EReturnCompare.RT_NotMatch_Null_OrgName);
+						bean.setCode(EReturnCompare.RT_NOTMATCH_NULL_SERVICENUMBER);
 						boo = false;
 					} else {
 						compareBean.setServiceNumber(json.getString("serviceNumber"));

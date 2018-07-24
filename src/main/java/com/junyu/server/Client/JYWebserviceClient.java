@@ -418,7 +418,6 @@ public class JYWebserviceClient{
 			NodeList returnList = root.getElementsByTagName("iReturn");
 			if (returnList.getLength() >= 1) {
 				Element e = (Element) returnList.item(0);
-
 				if (StringUtils.isNotBlank(e.getTextContent())) {
 					if( e.getTextContent().equals(EnumInstance.EReturn.RT_Success) ){
 						cr.setReturn_code(Return.RT_Success);
@@ -453,6 +452,7 @@ public class JYWebserviceClient{
 								cr.setSuccess(false);
 								cr.setReturn_code(Return.RT_Not_Compare);
 								cr.setCode(String.valueOf(iSimilarity));
+								cr.setInfo("Œ¥—È÷§");
 							}
 						}
 					}
